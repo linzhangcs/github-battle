@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { fetchPopularRepos } from '../utils/api.js'
 
 function  LanguageNav({selectedLanguage, updateSelectedLanguage}){
     const languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python']
@@ -30,24 +31,52 @@ class Popular extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedLanguage: 'All'
+            selectedLanguage: 'All',
+            repos: null,
+            error: null,
         }
 
         this.updateSelectedLanguage = this.updateSelectedLanguage.bind(this);
     }
-
+    componentDidMount(){
+        this.updateSelectedLanguage('All');
+    }
     updateSelectedLanguage(selectedLanguage){
         this.setState({
-            selectedLanguage
+            selectedLanguage,
+            error: null,
+            repos: null
+        })
+
+        fetchPopularRepos(selectedLanguage)
+        .then((repos) => this.setState({
+            repos,
+            error: null
+        }))
+        .catch((error) => {
+            console.warn('Error fetching repos', error);
+
+            this.setState({
+                error: 'There was an error fetching the repos'
+            })
         })
     }
-
+    isLoading(){
+        return this.state.repos === null && this.state.error === null;
+    }
     render(){
+        const{error, repos} = this.state;
         return(
-            <LanguageNav
-                selectedLanguage = {this.state.selectedLanguage}
-                updateSelectedLanguage = {this.updateSelectedLanguage}
-            ></LanguageNav>
+            <>
+                <LanguageNav
+                    selectedLanguage = {this.state.selectedLanguage}
+                    updateSelectedLanguage = {this.updateSelectedLanguage}
+                ></LanguageNav>
+                {this.isLoading() && <p>LOADING</p>}
+                {error && <p>{error}</p>}
+                {console.log(repos)}
+                {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+            </>
         )
     }
 }
