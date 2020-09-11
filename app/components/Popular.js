@@ -32,7 +32,7 @@ class Popular extends React.Component{
         super(props);
         this.state = {
             selectedLanguage: 'All',
-            repos: null,
+            repos: {},
             error: null,
         }
 
@@ -45,27 +45,41 @@ class Popular extends React.Component{
         this.setState({
             selectedLanguage,
             error: null,
-            repos: null
         })
 
-        fetchPopularRepos(selectedLanguage)
-        .then((repos) => this.setState({
-            repos,
-            error: null
-        }))
-        .catch((error) => {
-            console.warn('Error fetching repos', error);
-
-            this.setState({
-                error: 'There was an error fetching the repos'
+        // only fetch if there is no repos for this language
+        if(!this.state.repos[selectedLanguage]){
+            fetchPopularRepos(selectedLanguage)
+            .then((data) => {
+                this.setState(({ repos }) =>({
+                    repos:{
+                        ...repos,
+                        [selectedLanguage]: data
+                    }
+                }))
             })
-        })
+            .catch((error) => {
+                console.warn('Error fetching repos', error);
+    
+                this.setState({
+                    error: 'There was an error fetching the repos'
+                })
+            })
+
+            // fetchPopularRepos(selectedLanguage)
+            // .then((repos) => this.setState({
+            //     repos,
+            //     error: null
+            // }))
+        }
     }
     isLoading(){
-        return this.state.repos === null && this.state.error === null;
+        const{ selectedLanguage, repos, error} = this.state
+        return !repos[selectedLanguage] && error === null;
     }
+
     render(){
-        const{error, repos} = this.state;
+        const{error, selectedLanguage, repos} = this.state;
         return(
             <>
                 <LanguageNav
@@ -75,7 +89,7 @@ class Popular extends React.Component{
                 {this.isLoading() && <p>LOADING</p>}
                 {error && <p>{error}</p>}
                 {console.log(repos)}
-                {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+                {repos[selectedLanguage] && <pre>{JSON.stringify(repos, null, 2)}</pre>}
             </>
         )
     }
