@@ -11,7 +11,7 @@ function  LanguageNav({selectedLanguage, updateSelectedLanguage}){
                 languages.map((language) => (
                     <li key={language}>
                         <button className='btn-clear nav-link'
-                            style={ language === selectedLanguage ? { color: 'rgb(59, 7, 150)' } : null }
+                            style={ language === selectedLanguage ? { color: 'rgb(143 19 253)' } : null }
                             onClick={() => updateSelectedLanguage(language)}
                         >
                             {language}
@@ -40,7 +40,7 @@ function ReposGrid({repos}){
                     return(
                         <li key={html_url} className='repo bg-light'>
                             <h4 className='header-lg center-text'>
-                                #{index + 1}
+                                # {index + 1}
                             </h4>
                             <img
                                 className='avatar'
