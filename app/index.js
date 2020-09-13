@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'
 import Popular from './components/Popular';
-
+import Battle from './components/Battle'
 //component
 //state
 //lifecycle
@@ -12,7 +12,8 @@ class App extends Component{
         return(
             // <div>Hello world ✨🖐🐶</div>
             <div className="container">
-                <Popular />
+                {/* <Popular /> */}
+                <Battle />
             </div>
         ) 
     }
