@@ -52,19 +52,19 @@ function ReposGrid({repos}){
                             </h2>
                             <ul className='card-list'>
                                 <li>
-                                    <FaUser color="rgb(255, 191, 116)" size={22}></FaUser>
+                                    <FaUser color="rgb(255, 191, 116)" size={18}></FaUser>
                                     <a href={`https://github.com/${login}`}>{login}</a>
                                 </li>
                                 <li>
-                                    <FaStar color='rgb(255, 215, 0)' size={22}></FaStar>
+                                    <FaStar color='rgb(255, 215, 0)' size={18}></FaStar>
                                     {stargazers_count.toLocaleString()} starts
                                 </li>
                                 <li>
-                                    <FaCodeBranch color='rgb(129, 195, 245)' size={22}></FaCodeBranch>
+                                    <FaCodeBranch color='rgb(129, 195, 245)' size={18}></FaCodeBranch>
                                     {forks.toLocaleString()} forks
                                 </li>
                                 <li>
-                                    <FaExclamationTriangle color='rgb(241, 138, 147)' size={22}></FaExclamationTriangle>
+                                    <FaExclamationTriangle color='rgb(241, 138, 147)' size={18}></FaExclamationTriangle>
                                     {open_issues.toLocaleString()} open issues
                                 </li>
                             </ul>
