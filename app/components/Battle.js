@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FaUserFriends, FaFighterJet, FaTrophy } from 'react-icons/fa';
+import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa';
+import { render } from 'react-dom';
 
 function Instructions(){
     return(
@@ -81,6 +82,34 @@ PlayerInput.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired
 }
+
+function PlayerPreview({ username, onReset, label}){
+    return(
+        <div className='column player'>
+            <h3 className='player-label'>{label}</h3>
+            <div className='row bg-light'>
+                <div className='player-info'>
+                    <img className='avatar-small'
+                        src={`https://github.com/${username}.png?size=200`}
+                        alt={`avatar for ${username}`} />
+                    <a href={`https://github.com/${username}`}
+                        className='link'>
+                            {username}
+                    </a>
+                </div>
+                <button className='btn-clear flex-center' onClick={onReset}>
+                    <FaTimesCircle color='rgb(194, 57, 42)' size={24} />
+                </button>
+            </div>
+        </div>
+    );
+}
+
+PlayerPreview.propTypes ={
+    username: PropTypes.string.isRequired,
+    onReset: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired
+}
 class Battle extends React.Component{
     constructor(props){
         super(props);
@@ -103,15 +132,18 @@ class Battle extends React.Component{
                 <div className='players-containter'>
                     <h1 className='conter-text header-lg'>Players</h1>
                     <div className='row spaced-around'>
-                        {playerOne === null &&(
-                            <PlayerInput label='Player One' 
-                            onSubmit={(player) => this.handleSubmit('playerOne',player)} />
-                        )}
-                        {playerTwo === null &&(
-                            <PlayerInput label='Player Two' 
-                            onSubmit={(player) => this.handleSubmit('playerTwo',player)} />
-                        )}
-
+                        {playerOne === null 
+                            ? <PlayerInput label='Player One' 
+                                onSubmit={(player) => this.handleSubmit('playerOne',player)} /> 
+                            : <PlayerPreview label='playerOne'
+                                onReset={()=>({})}
+                                username={playerOne}></PlayerPreview>}
+                        {playerTwo === null 
+                            ? <PlayerInput label='Player Two' 
+                                onSubmit={(player) => this.handleSubmit('playerTwo',player)} /> 
+                            : <PlayerPreview label='playerTwo'
+                                onReset={()=>({})}
+                                username={playerTwo}></PlayerPreview>}
                     </div>
                 </div>
             </>
