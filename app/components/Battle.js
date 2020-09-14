@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaUserFriends, FaFighterJet, FaTrophy, FaTimesCircle } from 'react-icons/fa';
-import { render } from 'react-dom';
+import Results from './Results';
 
 function Instructions(){
     return(
@@ -110,22 +110,35 @@ PlayerPreview.propTypes ={
     onReset: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired
 }
+
 class Battle extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             playerOne: null,
             playerTwo: null,
+            battle: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
+
     handleSubmit(id, player){
         this.setState({
             [id]: player
         })
     }
+
+    handleReset(id){
+        this.setState({
+            [id]: null
+        })
+    }
     render(){
-        const { playerOne, playerTwo } = this.state;
+        const { playerOne, playerTwo, battle } = this.state;
+        if(battle){
+            return <Results playerOne={playerOne} playerTwo={playerTwo}></Results>
+        }
         return(
             <>
                 <Instructions />
@@ -136,15 +149,19 @@ class Battle extends React.Component{
                             ? <PlayerInput label='Player One' 
                                 onSubmit={(player) => this.handleSubmit('playerOne',player)} /> 
                             : <PlayerPreview label='playerOne'
-                                onReset={()=>({})}
+                                onReset={()=> this.handleSubmit('playerOne')}
                                 username={playerOne}></PlayerPreview>}
                         {playerTwo === null 
                             ? <PlayerInput label='Player Two' 
                                 onSubmit={(player) => this.handleSubmit('playerTwo',player)} /> 
                             : <PlayerPreview label='playerTwo'
-                                onReset={()=>({})}
+                                onReset={()=> this.handleReset('playerTwo')}
                                 username={playerTwo}></PlayerPreview>}
                     </div>
+
+                    {playerOne && playerTwo && (<button className='btn btn-dark btn-space'
+                        onClick={()=> this.setState({battle: true})}>Battle</button>)
+                    }
                 </div>
             </>
         );
