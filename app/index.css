@@ -10,6 +10,10 @@ body{
     background: #9e9e9e36;
 }
 
+button{
+    cursor: pointer;
+}
+
 ul{
     padding: 0;
 }
@@ -106,27 +110,27 @@ li{
     border-radius: 10px;
 }
 
-.repo{
+.card{
     margin: 10px 0;
     width: 250px;
     padding: 20px;
 }
 
-.repo:hover{
+.card:hover{
     cursor: pointer;
 }
 
-.repo a{
+.card a{
     text-decoration: none;
 }
 
-.repo:hover img{
+.card:hover img{
     /* clip-path: circle(75%) ; */
     clip-path: polygon(0 0, 50% 0, 100% 0, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%);
     filter: grayscale(0%) opacity(0.96);
 }
 
-.repo img{
+.card img{
     margin-bottom: 10px;
     filter: grayscale(100%) opacity(0.3);
     clip-path: polygon(50% 50%, 50% 25%, 50% 50%, 75% 50%, 50% 50%, 50% 75%, 50% 50%, 25% 50%);
@@ -220,7 +224,9 @@ li{
     color: #c7c7c7;
     background: #f2f2f2;
 }
-
+.btn-space{
+    margin: 40px auto;
+}
 .player-container{
     margin: 100px 0;
 }
@@ -241,4 +247,10 @@ li{
 
 .player-info .link{
     margin-left: 10px;
+}
+
+.error{
+    color: #ff1616;
+    font-size: 1.2em;
+    margin: 15px 0;
 }
