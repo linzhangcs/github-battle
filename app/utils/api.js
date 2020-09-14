@@ -14,6 +14,8 @@ function getProfile(username){
                 if(profile.message){
                     throw new Error(getErrorMsg(profile.message, username));
                 }
+                console.log(username);
+                console.log(profile);
                 return profile;
             })
 }
@@ -36,7 +38,8 @@ function getUserData(player){
     ]).then(([profile, repos]) => ({
         profile,
         score: calculateScore(profile.followers, repos)
-    }))
+    }
+    ))
 }
 
 function getStarCount(repos){

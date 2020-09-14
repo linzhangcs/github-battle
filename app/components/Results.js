@@ -12,8 +12,8 @@ class Results extends React.Component{
         }
     }
     componentDidMount(){
-        const {playerUsernameOne, playerUsernameTwo} = this.props;
-        battle([playerUsernameOne, playerUsernameTwo])
+        const {playerOne, playerTwo} = this.props;
+        battle([playerOne, playerTwo])
         .then((results) => {
             this.setState({
                 winner: results[0],
@@ -43,7 +43,7 @@ class Results extends React.Component{
         const size = 20;
         // const {playerOne, playerTwo} = this.props;
         return(
-            <div className='grid space-around container-small'>RESULTS
+            <div className='grid space-around container-small'>
                 {/* {JSON.stringify(this.state, null, 2)} */}
                 <div className="card bg-light">
                     <h4 className="header-lg center-text">
