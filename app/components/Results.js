@@ -81,6 +81,7 @@ class Results extends React.Component{
         }
         
         return(
+            <>
             <div className='grid space-around container-small'>
                 {console.log('loser', loser)}
                 <Card 
@@ -103,9 +104,17 @@ class Results extends React.Component{
                     <ProfileList profile={loser.profile} />
                 </Card>
             </div>
-
+            <button className="btn btn-dark btn-space" 
+                    onClick={this.props.onReset}>reset</button>
+            </>
         );
     }
 }
 
 export default Results;
+
+Results.propTypes = {
+    playerOne: PropTypes.string.isRequired,
+    playerTwo: PropTypes.string.isRequired,
+    onReset: PropTypes.func.isRequired
+}
