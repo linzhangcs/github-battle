@@ -1,6 +1,8 @@
 import React from 'react';
 import { battle } from '../utils/api';
 import { FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaCode, FaUser } from 'react-icons/fa';
+import Card from './Card';
+
 class Results extends React.Component{
     constructor(props){
         super(props);
@@ -41,23 +43,15 @@ class Results extends React.Component{
             );
         }
         const size = 20;
-        // const {playerOne, playerTwo} = this.props;
         return(
             <div className='grid space-around container-small'>
-                {/* {JSON.stringify(this.state, null, 2)} */}
-                <div className="card bg-light">
-                    <h4 className="header-lg center-text">
-                        {winner.score === loser.score ? 'Tie' : 'Winner'}
-                    </h4>
-                    <img
-                        className='avatar'
-                        src={winner.profile.avatar_url}
-                        alt={`avatar for ${winner.profile.username}`} />
-                    <h2 className='center-text'>
-                        <a href={winner.profile.html_url} className='link'>
-                            {winner.profile.login}
-                        </a>
-                    </h2>
+                <Card 
+                    header = {winner.score === loser.score ? 'Tie' : 'Winner'}
+                    subheader = {`Score: ${winner.score.toLocaleString()}`}
+                    avatar = {winner.profile.avatar_url}
+                    href = {winner.profile.html_url}
+                    name = {winner.profile.username}
+                >
                     <ul className='card-list'> 
                         <li>
                             <FaUser color='rgb(239, 115, 115)' size={size} />
@@ -78,30 +72,26 @@ class Results extends React.Component{
                         {winner.profile.followers &&(
                             <li>
                                 <FaUsers color='rgb(239, 115, 115)' size={size} />
-                                {winner.profile.followers}
+                                {winner.profile.followers.toLocaleString()} followers
                             </li>
                         )}
                         {winner.profile.following &&(
                             <li>
                                 <FaUserFriends color='rgb(239, 115, 115)' size={size} />
-                                {winner.profile.following}
+                                {winner.profile.following.toLocaleString()} following
                             </li>
                         )}
                     </ul>
-                </div>
-                <div className="card bg-light">
-                    <h4 className="header-lg center-text">
-                        {winner.score === loser.score ? 'Tie' : 'Loser'}
-                    </h4>
-                    <img
-                        className='avatar'
-                        src={loser.profile.avatar_url}
-                        alt={`avatar for ${loser.profile.username}`} />
-                    <h2 className='center-text'>
-                        <a href={loser.profile.html_url} className='link'>
-                            {loser.profile.login}
-                        </a>
-                    </h2>
+
+                </Card>
+
+                <Card 
+                    header = {winner.score === loser.score ? 'Tie' : 'Winner'}
+                    subheader = {`Score: ${loser.score.toLocaleString()}`}
+                    avatar = {loser.profile.avatar_url}
+                    href = {loser.profile.html_url}
+                    name = {loser.profile.username}
+                    >
                     <ul className='card-list'> 
                         <li>
                             <FaUser color='rgb(239, 115, 115)' size={size} />
@@ -122,19 +112,18 @@ class Results extends React.Component{
                         {loser.profile.followers &&(
                             <li>
                                 <FaUsers color='rgb(239, 115, 115)' size={size} />
-                                {loser.profile.followers}
+                                {loser.profile.followers.toLocaleString()} followers
                             </li>
                         )}
                         {loser.profile.following &&(
                             <li>
                                 <FaUserFriends color='rgb(239, 115, 115)' size={size} />
-                                {loser.profile.following}
+                                {loser.profile.following.toLocaleString()} followers
                             </li>
                         )}
 
                     </ul>
-                </div>
-
+                </Card>
             </div>
 
         );
