@@ -1,7 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { battle } from '../utils/api';
 import { FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaCode, FaUser } from 'react-icons/fa';
 import Card from './Card';
+
+function ProfileList ({ profile }){
+    const size = 20;
+    return(
+            <ul className='card-list'> 
+                <li>
+                    <FaUser color='rgb(239, 115, 115)' size={size} />
+                    {profile.name}
+                </li>
+                {profile.location &&(
+                    <li>
+                        <FaCompass color='rgb(239, 115, 115)' size={size} />
+                        {profile.location}
+                    </li>
+                )}
+                {profile.company &&(
+                    <li>
+                        <FaBriefcase color='rgb(239, 115, 115)' size={size} />
+                        {profile.company}
+                    </li>
+                )}
+                    <li>
+                        <FaUsers color='rgb(239, 115, 115)' size={size} />
+                        {profile.followers.toLocaleString()} followers
+                    </li>
+                    <li>
+                        <FaUserFriends color='rgb(239, 115, 115)' size={size} />
+                        {profile.following.toLocaleString()} followings
+                    </li>
+            </ul>
+    );
+}
+
+ProfileList.propTypes ={
+    profile: PropTypes.object.isRequired
+}
 
 class Results extends React.Component{
     constructor(props){
@@ -42,87 +79,28 @@ class Results extends React.Component{
             <p className='error center-text'>{error}</p>
             );
         }
-        const size = 20;
+        
         return(
             <div className='grid space-around container-small'>
+                {console.log('loser', loser)}
                 <Card 
                     header = {winner.score === loser.score ? 'Tie' : 'Winner'}
                     subheader = {`Score: ${winner.score.toLocaleString()}`}
                     avatar = {winner.profile.avatar_url}
                     href = {winner.profile.html_url}
-                    name = {winner.profile.username}
+                    name = {winner.profile.login}
                 >
-                    <ul className='card-list'> 
-                        <li>
-                            <FaUser color='rgb(239, 115, 115)' size={size} />
-                            {winner.profile.name}
-                        </li>
-                        {winner.profile.location &&(
-                            <li>
-                                <FaCompass color='rgb(239, 115, 115)' size={size} />
-                                {winner.profile.location}
-                            </li>
-                        )}
-                        {winner.profile.company &&(
-                            <li>
-                                <FaBriefcase color='rgb(239, 115, 115)' size={size} />
-                                {winner.profile.company}
-                            </li>
-                        )}
-                        {winner.profile.followers &&(
-                            <li>
-                                <FaUsers color='rgb(239, 115, 115)' size={size} />
-                                {winner.profile.followers.toLocaleString()} followers
-                            </li>
-                        )}
-                        {winner.profile.following &&(
-                            <li>
-                                <FaUserFriends color='rgb(239, 115, 115)' size={size} />
-                                {winner.profile.following.toLocaleString()} following
-                            </li>
-                        )}
-                    </ul>
-
+                    <ProfileList profile={winner.profile} />
                 </Card>
 
                 <Card 
-                    header = {winner.score === loser.score ? 'Tie' : 'Winner'}
+                    header = {winner.score === loser.score ? 'Tie' : 'Loser'}
                     subheader = {`Score: ${loser.score.toLocaleString()}`}
                     avatar = {loser.profile.avatar_url}
                     href = {loser.profile.html_url}
-                    name = {loser.profile.username}
+                    name = {loser.profile.login}
                     >
-                    <ul className='card-list'> 
-                        <li>
-                            <FaUser color='rgb(239, 115, 115)' size={size} />
-                            {loser.profile.name}
-                        </li>
-                        {loser.profile.location &&(
-                            <li>
-                                <FaCompass color='rgb(239, 115, 115)' size={size} />
-                                {loser.profile.location}
-                            </li>
-                        )}
-                        {loser.profile.company &&(
-                            <li>
-                                <FaBriefcase color='rgb(239, 115, 115)' size={size} />
-                                {loser.profile.company}
-                            </li>
-                        )}
-                        {loser.profile.followers &&(
-                            <li>
-                                <FaUsers color='rgb(239, 115, 115)' size={size} />
-                                {loser.profile.followers.toLocaleString()} followers
-                            </li>
-                        )}
-                        {loser.profile.following &&(
-                            <li>
-                                <FaUserFriends color='rgb(239, 115, 115)' size={size} />
-                                {loser.profile.following.toLocaleString()} followers
-                            </li>
-                        )}
-
-                    </ul>
+                    <ProfileList profile={loser.profile} />
                 </Card>
             </div>
 
