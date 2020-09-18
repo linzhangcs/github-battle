@@ -10,8 +10,8 @@ const styles = {
         marginTop: '20px',
         textAlign: 'center',
     }
-
 }
+
 export default class Loading extends React.Component{
     constructor(props){
         super(props);
